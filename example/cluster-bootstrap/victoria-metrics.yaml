@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  source:
+    chart: victoria-metrics-single
+    repoURL: https://victoriametrics.github.io/helm-charts/
+    targetRevision: 0.13.0
+    helm:
+      releaseName: victoria-metrics
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: victoria-metrics
