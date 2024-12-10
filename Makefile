@@ -12,3 +12,6 @@ down:
 
 uninstall_argocd:
 	@wrappers/argocd.sh $(CONTEXT_NAME) uninstall
+
+expose_argocd:
+	@wrappers/argocd.sh $(CONTEXT_NAME) expose
