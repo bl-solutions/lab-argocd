@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+
+  source:
+    repoURL: https://charts.crossplane.io/stable
+    chart: crossplane
+    targetRevision: 1.18.1
+    helm:
+      releaseName: crossplane
+      valuesObject:
+        function:
+          packages:
+            - "xpkg.upbound.io/crossplane-contrib/function-patch-and-transform:v0.1.4"
+        provider:
+          packages:
+            - "xpkg.upbound.io/upbound/provider-kubernetes:v0.16.0"
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+
+  syncPolicy:
+    retry:
+      limit: 0
+    automated:
+      prune: true
+      selfHeal: true

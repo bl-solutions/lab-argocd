@@ -1,0 +1,8 @@
+apiVersion: contoso.org/v1alpha1
+kind: AppClaim
+metadata:
+  name: my-custom-app
+  namespace: test
+spec:
+  region: "eu-west-1"
+  namespace: test

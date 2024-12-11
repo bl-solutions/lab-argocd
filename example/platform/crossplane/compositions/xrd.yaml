@@ -1,0 +1,39 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xapps.contoso.org  # Must match the plural name and group
+spec:
+  group: contoso.org
+
+  names:
+    kind: xApp
+    plural: xapps
+
+  claimNames:
+    kind: AppClaim
+    plural: appclaims
+
+  versions:
+    - name: v1alpha1
+      referenceable: true
+      served: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                namespace:
+                  type: string
+                  description: Namespace on Kubernetes cluster
+                region:
+                  type: string
+                  description: Region to deploy the application
+                  default: "eu-west-1"
+              required:
+                - namespace
+      additionalPrinterColumns:
+        - jsonPath: ".spec.region"
+          name: region
+          type: string

@@ -1,0 +1,76 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: app
+spec:
+  compositeTypeRef:
+    apiVersion: contoso.org/v1alpha1
+    kind: xApp
+  mode: Pipeline
+  pipeline:
+    - step: patch-and-transform
+      functionRef:
+        name: crossplane-contrib-function-patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: configuration
+            base:
+              apiVersion: kubernetes.crossplane.io/v1alpha1
+              kind: Object
+              spec:
+                forProvider:
+                  manifest:
+                    apiVersion: v1
+                    kind: ConfigMap
+                    metadata:
+                      name: config-1
+                providerConfigRef:
+                  name: kubernetes-provider
+
+            patches:
+              - fromFieldPath: spec.namespace
+                toFieldPath: spec.forProvider.manifest.metadata.namespace
+              - fromFieldPath: spec.region
+                toFieldPath: spec.forProvider.manifest.data.region
+
+          - name: configuration-2
+            base:
+              apiVersion: kubernetes.crossplane.io/v1alpha1
+              kind: Object
+              spec:
+                forProvider:
+                  manifest:
+                    apiVersion: v1
+                    kind: ConfigMap
+                    metadata:
+                      name: config-2
+                providerConfigRef:
+                  name: kubernetes-provider
+
+            patches:
+              - fromFieldPath: spec.namespace
+                toFieldPath: spec.forProvider.manifest.metadata.namespace
+              - fromFieldPath: spec.region
+                toFieldPath: spec.forProvider.manifest.data.region
+
+          - name: configuration-3
+            base:
+              apiVersion: kubernetes.crossplane.io/v1alpha1
+              kind: Object
+              spec:
+                forProvider:
+                  manifest:
+                    apiVersion: v1
+                    kind: ConfigMap
+                    metadata:
+                      name: config-3
+                providerConfigRef:
+                  name: kubernetes-provider
+
+            patches:
+              - fromFieldPath: spec.namespace
+                toFieldPath: spec.forProvider.manifest.metadata.namespace
+              - fromFieldPath: spec.region
+                toFieldPath: spec.forProvider.manifest.data.region
