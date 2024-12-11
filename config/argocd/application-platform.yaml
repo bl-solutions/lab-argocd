@@ -6,11 +6,11 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: platform
+  project: default
   source:
     repoURL: https://github.com/bl-solutions/lab-argocd.git
     targetRevision: HEAD
-    path: example/cluster-bootstrap
+    path: example/platform
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -18,5 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

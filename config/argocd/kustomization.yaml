@@ -5,7 +5,5 @@ namespace: argocd
 resources:
   - namespace.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/refs/tags/stable/manifests/install.yaml
-  - application-guestbook.yaml
-  - application-guestbook-helm.yaml
-  - project-platform.yaml
+#  - project-platform.yaml
   - application-platform.yaml
